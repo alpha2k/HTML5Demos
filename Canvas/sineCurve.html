@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<head>
+    
+    <title>Canvas 2D - Sine Curve</title>
+    
+    <script type="text/javascript">
+        
+        function drawFrame()
+        {
+            var myCanvas = document.getElementById("canvas");
+            var ctx = myCanvas.getContext("2d");
+            
+            convertToCartesian(ctx, myCanvas.width, myCanvas.height);           
+            drawAxisArea(ctx, myCanvas.width, myCanvas.height);    
+            plotSineCurve(ctx, 50, -360, 360);           
+        }
+        
+        //Draw using regular cartesian coordinate system
+        function convertToCartesian(ctx, wid, ht)
+        {
+            ctx.translate(wid/2, ht/2);//move origin
+            ctx.scale(1,-1); //invert the axes
+        }
+        
+        
+        //Write a text string to canvas
+        function displayMsg(ctx, msg)
+        {
+            ctx.save();
+            ctx.scale(1,-1); //invert the axes
+            ctx.font = "16pt Calibri";
+            ctx.fillStyle = "#88ffff"; // text color
+            ctx.fillText(msg, -350, -250);
+            ctx.restore();
+        }
+
+        //draw the axis         
+        function drawAxisArea(ctx, wid, ht)
+        {
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(wid/-2, ht/-2, wid, ht); 
+            ctx.beginPath();
+            ctx.strokeStyle="red";
+            ctx.moveTo(0,ht/2);  
+            ctx.lineTo(0,ht/-2); 
+            ctx.moveTo(wid/2, 0);  
+            ctx.lineTo(wid/-2, 0); 
+            ctx.stroke();              
+            ctx.closePath();
+        }
+                      
+        //plot the sine curve
+        function plotSineCurve(ctx, amplitude, startAngle, endAngle)
+        {
+            displayMsg(ctx, "Sine Curve");
+                        
+            ctx.beginPath();
+            ctx.strokeStyle="cyan";
+            for(var ang = startAngle; ang <= endAngle; ang++){
+                y = amplitude * Math.sin((Math.PI / 180.0) * ang);
+                ctx.lineTo(ang,y);
+            }
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+    </script>
+</head>
+
+<body>
+    <form>
+        <input type="button" onClick="drawFrame()" value="Click Me to Draw The Sine Curve"/>
+    </form>
+    <div id="convasElement">
+        <canvas id="canvas" width="800" height="600" style="border-style:solid;border-width:1px;background-color:#ffffff;">
+        </canvas>
+    </div>
+</body>
+
+</html>
