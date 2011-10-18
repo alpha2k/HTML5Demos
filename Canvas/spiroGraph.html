@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<head>
+    <title>Canvas 2D - SpiroGraph</title>
+    <script type="text/javascript">
+    	
+    	//start the draw timer
+        function initDraw()
+        {
+            var myCanvas = document.getElementById("canvas");
+            var ctx = myCanvas.getContext("2d");
+            convertToCartesian(ctx, myCanvas.width, myCanvas.height);
+            plotSpiroGraph(ctx, myCanvas.width, myCanvas.height);
+            setInterval(function(){plotSpiroGraph(ctx, myCanvas.width, myCanvas.height);}, 1000)
+        }
+        
+        //convert to regular cartesian coordinates
+        function convertToCartesian(ctx, wid, ht)
+        {
+            ctx.translate(wid/2, ht/2);//move origin
+            ctx.scale(1,-1); //invert the axes
+        }
+        
+        //plot spirograph
+        function plotSpiroGraph(ctx, wid, ht)
+        {
+            
+            var R = getRandomNumber(50,300);
+            var r = getRandomNumber(40, (R * 0.75));
+            var alpha = getRandomNumber(35, r);
+            var l = alpha / r;
+            var k = r / R;
+            
+            //clear the draw area
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(wid/-2, ht/-2, wid, ht);
+            
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba("+getRandomNumber(75, 200)+", "+ getRandomNumber(145, 200) +", "+getRandomNumber(65, 200)+", 1)";
+            
+            for(var theta=1; theta<=20000; theta += 1){
+                var t = ((Math.PI / 180) * theta);
+                var ang = ((l-k)/k) * t;
+                var x = R * ((1-k) * Math.cos(t) + ((l*k) * Math.cos(ang)));
+                var y = R * ((1-k) * Math.sin(t) - ((l*k) * Math.sin(ang)));
+                ctx.lineTo(x, y);                               
+            }            
+            ctx.stroke();
+            ctx.closePath();
+        }
+        
+        //Generate random number within range
+        function getRandomNumber(start, end)
+        {
+            return (Math.floor((Math.random() * (end-start))) + start);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="convasElement">
+        <canvas id="canvas" width="800" height="600" style="border-style:solid;border-width:1px;background-color:#ffffff;">
+        </canvas>
+    </div>
+    <script>
+    	initDraw(); //start the draw timer
+    </script>
+</body>
+</html>
