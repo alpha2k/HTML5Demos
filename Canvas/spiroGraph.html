@@ -36,7 +36,9 @@
             ctx.fillRect(wid/-2, ht/-2, wid, ht);
             
             ctx.beginPath();
-            ctx.strokeStyle = "rgba("+getRandomNumber(65, 210)+", "+ getRandomNumber(65, 210) +", "+getRandomNumber(65, 210)+", 1)";
+            ctx.strokeStyle = "rgba("+getRandomNumber(65, 210)+ 
+                            ", "+ getRandomNumber(65, 210) +
+                            ", "+getRandomNumber(65, 210)+", 1)";
             
             for(var theta=1; theta<=20000; theta += 1){
                 var t = ((Math.PI / 180) * theta);
@@ -58,8 +60,9 @@
     </script>
 </head>
 <body>
-    <div id="convasElement">
-        <canvas id="canvas" width="800" height="600" style="border-style:solid;border-width:1px;background-color:#ffffff;">
+    <div id="canvasElement">
+        <canvas id="canvas" width="800" height="600" 
+              style="border-style:solid;border-width:1px;background-color:#ffffff;">
         </canvas>
     </div>
     <script>
